@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Before/After</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #fff; margin: 0; padding: 20px; }
+        h1 { text-align: center; }
+        .card { background: #1e1e1e; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; }
+        .slider-container { position: relative; width: 100%; max-width: 800px; line-height: 0; border-radius: 8px; overflow: hidden; user-select: none; }
+        .slider-container img { display: block; width: 100%; height: auto; pointer-events: none; }
+        .img-after-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; clip-path: inset(0 50% 0 0); border-right: 3px solid #fff; }
+        .img-after-wrap img { width: 100%; height: 100%; object-fit: contain; }
+        .range-input { position: absolute; bottom: 15px; left: 5%; width: 90%; z-index: 10; cursor: pointer; }
+        
+        /* Update Banner Popup */
+        #update-banner { display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #ff9800; color: #000; padding: 12px 20px; border-radius: 30px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1000; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>My Portfolio</h1>
+    <div id="card-container"></div>
+
+    <div id="update-banner">🔄 New update available! Click to reload.</div>
+
+    <script>
+        // --- ADD / EDIT YOUR CARDS CONFIG HERE ---
+        const portfolioCards = [
+            {
+                header: "Wall Holes Repair",
+                before: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600",
+                after: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600"
+            },
+            {
+                header: "Kitchen Renovation",
+                before: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600",
+                after: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600"
+            }
+        ];
+
+        const container = document.getElementById("card-container");
+
+        portfolioCards.forEach(item => {
+            container.innerHTML += `
+                <div class="card">
+                    <h3>${item.header}</h3>
+                    <div class="slider-container">
+                        <img src="${item.before}" alt="Before">
+                        <div class="img-after-wrap">
+                            <img src="${item.after}" alt="After">
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="range-input">
+                    </div>
+                </div>
+            `;
+        });
+
+        // Slider Mask Logic (Using clip-path for clean anchoring and no stretching)
+        document.querySelectorAll('.slider-container').forEach(slider => {
+            const range = slider.querySelector('.range-input');
+            const afterWrap = slider.querySelector('.img-after-wrap');
+            
+            range.addEventListener('input', (e) => {
+                const val = e.target.value;
+                // Clips from the right side based on range value
+                afterWrap.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+            });
+        });
+
+        // --- SERVICE WORKER REGISTRATION & UPDATE DETECTOR ---
+        const CHECK_INTERVAL_MS = 30 * 1000; // how often to check the repo/server for a new sw.js
+        let waitingWorker = null;
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(reg => {
+
+                // Fired when the browser finds a byte-different sw.js on the server
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // A new version is installed and waiting — show the banner
+                            waitingWorker = reg.waiting || newWorker;
+                            document.getElementById('update-banner').style.display = 'block';
+                        }
+                    });
+                });
+
+                // Actively poll for changes instead of waiting for the browser's own schedule.
+                // reg.update() forces a fresh network fetch of sw.js and compares it byte-for-byte
+                // against the currently installed one — this is what detects "repo changed".
+                setInterval(() => {
+                    reg.update().catch(() => {/* offline or fetch failed, ignore */});
+                }, CHECK_INTERVAL_MS);
+
+                // Also check immediately whenever the tab regains focus/visibility
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') {
+                        reg.update().catch(() => {});
+                    }
+                });
+            });
+
+            // When a new worker takes control (after skipWaiting + reload), refresh once more
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                refreshing = true;
+                window.location.reload();
+            });
+
+            document.getElementById('update-banner').addEventListener('click', () => {
+                if (waitingWorker) {
+                    // Tell the new worker to activate now; controllerchange listener above reloads the page
+                    waitingWorker.postMessage('SKIP_WAITING');
+                } else {
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
