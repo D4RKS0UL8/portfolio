@@ -1,6 +1,6 @@
 // Bump this on every deploy that changes cached files (or automate via build step).
 // Note: the page (index.html) now also independently detects content changes every
-// minute by hashing the live file, and can wipe caches directly — this version bump
+// minute by hashing the ive file, and can wipe caches directly — this version bump
 // is a secondary/backup mechanism, not the primary update detector anymore.
 const CACHE_VERSION = 'v1';
 const CACHE_NAME = `portfolio-cache-${CACHE_VERSION}`;
