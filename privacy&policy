@@ -3,16 +3,17 @@ Privacy Policy
 Effective Date: August 26, 2026
 
 1. Information We Collect
-- Discord User ID: Used solely to track your virtual currency balance and game stats.
-- Interaction Data: Commands used to operate the virtual casino.
+- **Discord User IDs & Guild Data:** Collected to manage server-specific profiles, balances, and rankings[cite: 2].
+- **In-Game Data:** Virtual balances (DTs), user inventories, custom bios, win streaks, and command cooldown timestamps stored locally per server database[cite: 2].
+- **Message Activity:** Timestamps of messages sent within servers to calculate activity statistics (24h, 7 days, and lifetime metrics)[cite: 2].
 
 2. Use of Information
-All data collected is strictly for running the entertainment features of the bot. This bot uses strictly virtual, worthless in-app currency. No real money, financial details, or personal data are ever collected, processed, or stored.
+All data is used strictly to power the bot's entertainment features, virtual casino games (Blackjack, Coinflip), shop transactions, and user stats command (`.stats`)[cite: 2]. No real-world financial or sensitive personal information is ever collected or processed.
 
-3. Data Sharing
-We do not share, sell, or distribute your information to any third parties.
+3. Data Storage
+Data is stored locally in server-specific SQLite files (`server_dbs/`) managed by the bot[cite: 2].
 
 4. Contact & Support
-If you have questions or want your data removed, reach out via:
+For questions, data inquiries, or removal requests:
 - Discord: spiritual_og
-- Email: d4rks0ul.1389@gmail.com 
+- Email: d4rks0ul.1389@gmail.com
