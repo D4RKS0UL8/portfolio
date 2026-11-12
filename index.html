@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Impact Motion</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">IM</span><span>Impact Motion</span></div>
+    <div class="project-name">Untitled project <span class="dot"></span> 1080 × 1080</div>
+    <div class="top-actions">
+      <button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Settings">⚙</button>
+      <button class="export-btn" id="exportBtn" disabled>Export</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar">
+      <div class="side-tabs" role="tablist" aria-label="Template categories">
+        <button class="side-tab" data-tab="aura">Aura</button>
+        <button class="side-tab active" data-tab="slam">Slam</button>
+        <button class="side-tab" data-tab="effects">Effects</button>
+        <button class="side-tab" data-tab="shake">Shake</button>
+      </div>
+      <div class="library-heading">
+        <div><span class="eyebrow">TEMPLATE LIBRARY</span><h2 id="libraryTitle">Slam</h2></div>
+        <span class="count">01</span>
+      </div>
+      <div class="template-list" id="templateList">
+        <button class="template-card selected" id="slamTemplate">
+          <div class="template-thumb"><span class="thumb-orbit"></span><span class="thumb-car">SLAM</span><span class="play-mini">▶</span></div>
+          <div class="template-meta"><strong>Imortal Car Slam</strong><span>Position · Scale · Rotation</span></div>
+          <span class="selected-check">✓</span>
+        </button>
+      </div>
+      <div class="sidebar-foot"><span class="status-dot"></span> Template library synced</div>
+    </aside>
+
+    <section class="editor">
+      <div class="preview-toolbar">
+        <div><span class="eyebrow">CANVAS</span><strong>Preview</strong></div>
+        <div class="preview-tools"><span id="mediaInfo">No media imported</span><button id="fitBtn" class="small-tool">Fit</button></div>
+      </div>
+      <div class="preview-stage" id="dropZone">
+        <div class="empty-state" id="emptyState">
+          <div class="upload-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15.5v3A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-3"/></svg></div>
+          <h2>Click to Select or<br>Drag and Drop Media</h2>
+          <p>from: mp4 - mov - img - jpg - jpeg - png</p>
+          <span class="preferred">PNG with transparency recommended</span>
+        </div>
+        <canvas id="previewCanvas" width="1080" height="1080" hidden></canvas>
+        <div class="drop-overlay" id="dropOverlay"><div class="drop-message">Drop to Import Media</div></div>
+        <input id="mediaInput" type="file" accept="video/mp4,video/quicktime,image/*,.mov,.mp4" hidden>
+        <div class="preview-hud" id="previewHud" hidden><span id="playState">READY</span><span id="timeReadout">00:00:00</span></div>
+      </div>
+      <div class="preview-controls">
+        <button class="round-control" id="restartBtn" title="Restart">↺</button>
+        <button class="play-control" id="playBtn" title="Play" disabled>▶</button>
+        <button class="round-control" id="stepBtn" title="Next frame" disabled>▸|</button>
+        <span class="control-spacer"></span>
+        <span class="fps-label" id="fpsLabel">60 FPS</span>
+      </div>
+    </section>
+  </main>
+
+  <section class="timeline-panel">
+    <div class="timeline-header">
+      <div class="timeline-title"><span class="eyebrow">PROJECT</span><strong>Timeline</strong></div>
+      <div class="timeline-actions"><span class="duration-label" id="durationLabel">00:19:98</span><button class="small-tool" id="zoomOut">−</button><button class="small-tool" id="zoomIn">+</button></div>
+    </div>
+    <div class="timeline-scroll" id="timelineScroll">
+      <div class="timeline-inner" id="timelineInner">
+        <div class="ruler-ms" id="rulerMs"></div>
+        <div class="ruler-frames" id="rulerFrames"></div>
+        <div class="track-row">
+          <div class="track-label"><span class="track-icon">▧</span><span>Media</span></div>
+          <div class="track-lane" id="mediaLane"><div class="track-placeholder">Import media to begin</div><div class="clip-block" id="clipBlock" hidden><span id="clipName">Media</span></div></div>
+        </div>
+        <div class="track-row">
+          <div class="track-label"><span class="track-icon">◈</span><span>Transform</span></div>
+          <div class="track-lane transform-lane"><div class="effect-strip">Position <i></i> Scale <i></i> Rotation</div></div>
+        </div>
+        <div class="playhead" id="playhead"><div class="playhead-cap"></div></div>
+      </div>
+    </div>
+    <div class="timeline-footer"><span><span class="legend-dot"></span> Slam template keyframes</span><span id="frameReadout">Frame 0</span></div>
+  </section>
+</div>
+
+<div class="modal-backdrop" id="settingsModal" hidden>
+  <section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-head"><div><span class="eyebrow">PROJECT CONFIGURATION</span><h2 id="settingsTitle">Settings</h2></div><button class="icon-btn close-btn" id="closeSettings" aria-label="Close">×</button></div>
+    <label class="setting-label" for="fpsInput">Project frame rate</label>
+    <div class="fps-input-row"><input id="fpsInput" type="number" min="30" max="240" step="1" value="60"><span>FPS</span></div>
+    <p class="setting-hint">Enter a value from 30 to 240 frames per second.</p>
+    <div class="modal-actions"><button class="cancel-btn" id="cancelSettings">Cancel</button><button class="save-btn" id="saveSettings">Save settings</button></div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>

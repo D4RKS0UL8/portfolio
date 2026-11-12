@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?><!--
+Created by Alight Motion (http://alightmotion.com)
+Exported: 2026-11-12 11:01 AM
+5.0.161.106019 (106019)
+d914fff (30 Aug 2023 15:36:06)
+-->
+<scene title="imortal-car-slam" width="1080" height="1080" exportWidth="1080" exportHeight="1080" precompose="dynamicResolution" bgcolor="#ff000000" totalTime="1199" fps="60" modifiedTime="1794481293578" amver="106019" ffver="106" am="com.goldmotion.pnkj/5.0.161.106019" amplatform="android" retime="freeze" retimeAdaptFPS="false">
+  <media uri="content://media/external/images/media/1000020472" type="image/png" duration="0" orientation="0" infoUpdated="1794478583400" width="0" height="0" />
+  <shape id="202439176" label="SaveTik.mov" startTime="0" endTime="1199" fillType="media" fillImage="content://media/external/images/media/1000020472" speed="0.001000" mediaFillMode="stretch" s=".rect">
+    <transform>
+      <location>
+        <kf t="0.000000" v="540.000000,-203.187500,0.000000" />
+        <kf t="0.537948" v="540.020630,604.500000,0.000000" e="cubicBezier 0.21054691 0.0 0.08990398 1.0" />
+        <kf t="0.850709" v="540.020630,183.362091,0.000000" e="cubicBezier 0.7110656 0.0 0.18127601 0.9630314" />
+        <kf t="0.996664" v="540.470337,658.298340,0.000000" e="cubicBezier 1.0 0.0 0.97579217 1.0" />
+        <kf t="0.298582" v="540.000000,859.875000,0.000000" e="cubicBezier 0.3909194 0.0 0.0 1.0" />
+      </location>
+      <scale>
+        <kf t="0.496247" v="0.579861,0.579861" e="cubicBezier 0.3004649 0.0 0.26714277 1.0" />
+        <kf t="0.850709" v="0.336111,0.336111" e="cubicBezier 0.5613836 0.0 0.50677454 1.0" />
+        <kf t="0.996664" v="0.807639,0.807639" e="cubicBezier 0.62472475 0.0 1.0 0.7937846" />
+        <kf t="0.000000" v="0.763194,0.763194" />
+        <kf t="0.294412" v="0.367361,0.367361" e="cubicBezier 0.0 0.0 0.49966356 1.0" />
+      </scale>
+      <rotation>
+        <kf t="0.016681" v="180.000000" />
+        <kf t="0.315263" v="46.097561" e="cubicBezier 0.0 0.24491683 0.7909072 1.0" />
+        <kf t="0.850709" v="18.658537" e="cubicBezier 0.7310986 0.0 0.25724396 1.0" />
+        <kf t="0.996664" v="0.000000" e="cubicBezier 0.43519086 0.0 0.6109157 1.0" />
+        <kf t="0.537948" v="-8.780487" e="cubicBezier 0.19387692 0.0 0.2574321 1.0" />
+      </rotation>
+    </transform>
+    <property name="size" type="vec2" value="720.000000,720.000000" />
+  </shape>
+</scene>
